@@ -1,0 +1,43 @@
+body {
+    font-family: var(--principal_font);
+}
+
+nav{
+    color: var(--couleur-principale);
+    background-color: red;
+    color: white;
+    font-family: var(--nav_font);
+    font-size: 32px;
+    text-align: center;
+    /* padding: 20px;    */
+}
+
+nav ul {
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+    padding: 0;
+    border-top: 1px solid var(--couleur-fond);
+    
+    border-bottom: 3px solid var(--couleur-fond);
+}
+
+nav li{
+    cursor: pointer;
+}
+
+nav ul a {
+    color: var(--couleur-fond-pale);
+    text-decoration: none;
+    font-family: var(--police-principale);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    padding: 20px 20px 20px 20px;
+    display: block;
+}
+
+nav ul a:hover,
+nav ul a.active {
+    background-color: var(--couleur-fond);
+    color: var(--couleur-principale);
+}

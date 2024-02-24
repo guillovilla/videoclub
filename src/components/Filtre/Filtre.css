@@ -1,0 +1,9 @@
+.filtres {
+    display: flex;
+    flex-direction: row;
+    color: brown;
+}
+li {
+    cursor: pointer;
+    margin: 10px;
+}

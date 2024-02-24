@@ -1,0 +1,18 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@font-face {
+  font-family: 'Cinema';
+  src: url('../../../public/fonts/cinema_st.ttf') format('opentype');
+  /* Puedes agregar estilos adicionales si es necesario, como font-weight o font-style */
+}
+@font-face {
+  font-family: 'ASSEENONTV';
+  src: url('../../../public/fonts/ASSEENONTV.ttf') format('opentype');
+  /* Puedes agregar estilos adicionales si es necesario, como font-weight o font-style */
+}
+
+:root {
+    --principal_font: 'Press Start 2';
+    --secundary_font: 'ASSEENONTV';
+    --nav_font: 'Cinema';
+  }
