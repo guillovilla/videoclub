@@ -6,12 +6,15 @@ import { useEffect, useState } from 'react';
 
 
 
+
 function ListeFilms() {
   
   const urlListeFilms = 'https://api-films-dsr0.onrender.com/api/films';
-  // const urlListeFilms = 'data/titre-asc.json';
+  // const urlListeFilms = 'dat/titre-asc.json';
   const [urlFiltre, setUrlFiltre] = useState(urlListeFilms);
   const [listeFilms, setListeFilms] = useState([]);
+  
+  
 
   useEffect(() => {
 
@@ -28,37 +31,49 @@ function ListeFilms() {
 
   const tuilesFilm = listeFilms.map((film, index) => {
 
-    return <Link key={index} to={`/film/${film.id}`}><TuileFilm key={index} data={film} /></Link>
-
+    return <Link key={index} to={`/film/${film.id}`}><TuileFilm key={index} data={film}  handleInfo={urlFiltre} /></Link>
+    
   });
 
-function filtre(e) {
-    // console.log(e.target.textContent )
 
-    if(e.target.textContent === 'Réalisateur alphabetique (A-Z)'){
+  function filtre(e) {
+    if(e.target.textContent === 'Réalisateur (A-Z)'){
       setUrlFiltre(`https://api-films-dsr0.onrender.com/api/films?tri=realisation&order-direction=asc`);
-    }else if (e.target.textContent === 'Réalisateur alphabetique (Z-A)'){
+      // setUrlFiltre('data/realisation-asc.json');
+    }else if (e.target.textContent === 'Réalisateur (Z-A)'){
       setUrlFiltre(`https://api-films-dsr0.onrender.com/api/films?tri=realisation&order-direction=desc`);
-    }else if (e.target.textContent === 'Titre alphabétique (A-Z)'){
+      // setUrlFiltre('data/realisation-desc.json');
+    }else if (e.target.textContent === 'Titre (A-Z)'){
       setUrlFiltre(`https://api-films-dsr0.onrender.com/api/films?tri=titre&order-direction=asc`);
-    }else if (e.target.textContent === 'Titre alphabétique (Z-A)'){
+      // setUrlFiltre('data/titre-asc.json');
+    }else if (e.target.textContent === 'Titre (Z-A)'){
       setUrlFiltre(`https://api-films-dsr0.onrender.com/api/films?tri=titre&order-direction=desc`);
-    }else if (e.target.textContent === 'Par année (du plus récent)'){
-      setUrlFiltre(`https://api-films-dsr0.onrender.com/api/films?tri=annee&order-direction=asc`);
-    }else if (e.target.textContent === 'Par année (du plus ancien)'){
+      // setUrlFiltre('data/titre-desc.json');
+    }else if (e.target.textContent === 'Année (plus récent)'){
       setUrlFiltre(`https://api-films-dsr0.onrender.com/api/films?tri=annee&order-direction=desc`);
+      // setUrlFiltre('data/annee-asc.json');
+    }else if (e.target.textContent === 'Année (plus ancien)'){
+      setUrlFiltre(`https://api-films-dsr0.onrender.com/api/films?tri=annee&order-direction=asc`);
+      // setUrlFiltre('data/annee-desc.json');
     }
 }
 
-// function maDeuxiemmeFonction() {
-//   console.log('2emefonction')
-// }
+//contrôle class .active
+function classActive(e) {
 
+  let elsFiltre = e.target.closest('.filtres').children;
+
+  // console.log(elsFiltre)
+
+  for (let i = 0; i < elsFiltre.length; i++) {
+    elsFiltre[i].classList.remove('active');
+  }   
+  e.target.classList.add('active');
+}
 
   return (
     <main>
-
-      <Filtre handleFiltre={filtre} />
+      <Filtre handleFiltre={filtre} handleTarget={classActive}  />
       <div className="grid-catalogue">
         {tuilesFilm}
       </div>

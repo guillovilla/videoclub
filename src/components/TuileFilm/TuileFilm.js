@@ -1,12 +1,32 @@
 import './TuileFilm.css';
 
+
 function TuileFilm(props) {
+
+    const urlComplet = props.handleInfo;
+    const url = new URL(urlComplet);
+    const triValue = url.searchParams.get('tri');
+    let propriete = 'titre';
+    
+    //reference: https://herewecode.io/blog/react-get-url-params/
+
+    if (triValue == "annee") {
+        propriete = "annee";
+    } else if (triValue == "titre") {
+        propriete = "titre";
+    } else if (triValue == "realisation") {
+        propriete = "realisation";
+    }
+  
+
+  
   return (
     <article className="item">
-        <a href="#0" aria-labelledby={props.data.titre}></a>
+        <h4 href="#0"></h4>
         <img src={`img/${props.data.titreVignette}`} alt="img" width="50" />
         <div className="item__overlay">
-            <h3>{props.data.titre}</h3>
+            {/* <h3 className='info-aficher'>{props.data.titre}</h3> */}
+            <h3 className='info-aficher'>{props.data[propriete]}</h3>
             <div className="item__body">
                 <p>{props.data.description}</p><br></br>
             </div>

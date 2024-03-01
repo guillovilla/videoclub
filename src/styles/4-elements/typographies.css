@@ -6,13 +6,24 @@
   /* Puedes agregar estilos adicionales si es necesario, como font-weight o font-style */
 }
 @font-face {
-  font-family: 'ASSEENONTV';
-  src: url('../../../public/fonts/ASSEENONTV.ttf') format('opentype');
+  font-family: 'Capitol';
+  src: url('../../../public/fonts/Cinema\ Capitol.otf') format('opentype');
+  /* Puedes agregar estilos adicionales si es necesario, como font-weight o font-style */
+}
+@font-face {
+  font-family: 'NeonLight';
+  src: url('../../../public/fonts/NeonLight-Regular.ttf') format('opentype');
+  /* Puedes agregar estilos adicionales si es necesario, como font-weight o font-style */
+}
+@font-face {
+  font-family: 'Film';
+  src: url('../../../public/fonts/Film\ Premieres.otf') format('opentype');
   /* Puedes agregar estilos adicionales si es necesario, como font-weight o font-style */
 }
 
 :root {
     --principal_font: 'Press Start 2';
-    --secundary_font: 'ASSEENONTV';
-    --nav_font: 'Cinema';
+    --secundary_font: 'Capitol';
+    --nav_font: 'NeonLight';
+
   }

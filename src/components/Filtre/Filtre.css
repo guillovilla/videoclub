@@ -1,9 +1,36 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    background-color:var(--couleur-principale);
+}
+
 .filtres {
     display: flex;
-    flex-direction: row;
-    color: brown;
+    flex-direction: column;
 }
-li {
+
+p {
+    color: var(--text-color);
+    font-family: sans-serif;
     cursor: pointer;
-    margin: 10px;
+    margin: 25px;
+    
 }
+
+h2 {
+    color: var(--text-color);
+    margin: 10px;
+    font-family:sans-serif;
+}
+
+p:hover {
+    
+    color: var(--secondary-color);
+    text-decoration: underline;
+}
+
+p:active {
+    
+    color: var(--secondary-color);
+}
+

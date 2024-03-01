@@ -7,13 +7,16 @@ function Accueil() {
   //   return <p key={index} data={text} />
 
     const textAccueil = test.map((text, index) => {
-      return <p key={index}>{text}</p>;
+      return <div><p key={index}>{text}</p></div>;
 
   });
   return (
     <main>
-      Accueil
-      {textAccueil}
+      <div>
+        <div className='container-accueil'>
+        </div>    
+        <div>{textAccueil}</div>
+      </div>    
     </main>
   );
 }
