@@ -1,18 +1,34 @@
+import { useContext } from 'react';
+import { AppContext } from '../App/App';
 import { NavLink } from 'react-router-dom';
 import './Entete.css';
 
-function Entete() {
+function Entete(props) {
+  const context = useContext(AppContext)
+
   return (
     <header>
       <nav>
         <ul role="menubar">
             <li role="menuitem"><NavLink to="/">Accueil</NavLink></li>
-            <li role="menuitem"><NavLink to="/liste-films">Liste de films</NavLink></li>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/></svg>
+            <li className='entete-text' role="menuitem"><NavLink to="/liste-films">Liste de films</NavLink></li>
+            <li role="menuitem"> {context.estLog ? <NavLink to="/admin">Admin</NavLink> : '' }</li> 
         </ul>
+            <li role="menuitem"> {context.estLog ? 
+                                 <form onSubmit={props.handleLogoff}>
+                                    <button>Logout</button>
+                                  </form> : '' } </li> <h2>{context.usager}</h2>
+            <li role="menuitem">{context.estLog ? '' :
+                                <form onSubmit={props.handleLogin}>
+                                  <input type="text" name="usager"></input>
+                                  <button>Login</button>
+                                </form>}</li>
       </nav>
+
     </header>
   );
 }
 
 export default Entete;
+
+//Reference pour le button: https://believemy.com/r/creer-un-bouton-neon-avec-css 

@@ -1,36 +1,106 @@
 import './Film.css';
-import { useEffect, useState } from 'react';
+import Note from  '../Note/Note';
+import { useEffect, useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import { NavLink } from 'react-router-dom';
+import { AppContext } from '../App/App';
+
 
 function Film() {
+
+  const context = useContext(AppContext)
   
   let { id } = useParams();
 
     const urlFilm = `https://api-films-dsr0.onrender.com/api/films/${id}`;
     const [elFilm, setFilm] = useState([]);
+    const [nbVotes, setNbVotes] = useState(0);
+    const [moyenne, setMoyenne] = useState(0);
+    const [aCommentaires, setACommentaires] = useState([]);
   
     useEffect(() => {
   
       fetch(urlFilm)
         .then((reponse) => reponse.json())
         .then((data) => {
-  
+          
           setFilm(data);
-  
+          const notes = data.notes || [];
+          setNbVotes(notes.length);
+
+          //si le film a ou n'a pas de notes
+          if (notes.length > 0) {
+            const totalVotes = notes.reduce((total, vote) => total + vote, 0);
+            let moyenne = totalVotes / data.notes.length;
+                moyenne = moyenne.toFixed(2);
+          setMoyenne(moyenne);
+          } else {
+            setMoyenne(0);
+          } 
         }); 
   
-    }, []);
+    }, [urlFilm]);
 
-    async function soumettreNote(e){
-      
-      const inputValue = parseInt(e.target.value);
-      let aNotes;
-      if (!elFilm.notes){
-        aNotes = [inputValue]
+    // const notes = elFilm.notes || [];
+    // let nbVotes = notes.length;
+    // const totalVotes = notes.reduce((total, vote) => total + vote, 0);
+    // let moyenne = totalVotes / notes.length;
+    // moyenne = moyenne.toFixed(2);
+           
+        async function soumettreNote(e){
+          
+          const inputValue = parseInt(e.target.value);
+          let aNotes;
+          if (!elFilm.notes){
+            aNotes = [inputValue]
+          } else {
+            aNotes = elFilm.notes;
+            aNotes.push(inputValue);
+          }
+          
+          const oOptions = {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({notes: aNotes})
+          }
+          
+          let putNote = await fetch(urlFilm, oOptions),
+          getFilm = await fetch(urlFilm);
+          
+          Promise.all([putNote, getFilm])
+        .then(reponse => reponse[1].json())
+        .then((data) =>{
+  
+          setFilm(data);
+          setNbVotes(data.notes.length);
+          const totalVotes = data.notes.reduce((total, vote) => total + vote, 0);
+          let moyenne = totalVotes / data.notes.length;
+              moyenne = moyenne.toFixed(2);
+          setMoyenne(moyenne);
+        })
+        //setNbVotes()
+        //setMoyenne()
+    }
+
+    let blocAjoutCommantaire;
+
+    if(context.estLog) {
+      blocAjoutCommantaire =  <form onSubmit={soumettreCommentaire}>
+                                <textarea name="textarea" placeholder='Ajouter votre commentaires'></textarea>
+                                <button>soumettre</button>
+                              </form>
+    }
+
+    async function soumettreCommentaire(e){
+      e.preventDefault(); 
+      let aCommentaires;
+      let elCommentaire = document.querySelector('textarea').value;
+      if (!elFilm.commentaires){
+        aCommentaires = [{ commentaires: elCommentaire, usager: context.usager}];
       } else {
-        aNotes = elFilm.notes;
-        aNotes.push(inputValue);
+        aCommentaires = elFilm.commentaires;
+        aCommentaires.push({ commentaires: elCommentaire, usager: context.usager});
       }
 
       const oOptions = {
@@ -38,80 +108,46 @@ function Film() {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({notes: aNotes})
+        body: JSON.stringify({commentaires: aCommentaires})
       }
-
-      async function setMoyenne(){
-      console.log(elFilm.notes)
-        // const inputValue = parseInt(e.target.value);
-        // let totalNotes = 0;
-        // for (let i = 0; i < elFilm.notes.length; i++) {
-        //   totalNotes += elFilm.notes[i];
-        //   console.log(elFilm.notes)
-        // }
       
-        // elFilm.notes
-        // if (!elFilm.notes){
-        //   aNotes = [inputValue]
-        // } else {
-        //   aNotes = elFilm.notes;
-        //   aNotes.push(inputValue);
-        // }
-  
-        const oOptions = {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          
-        }
-      }
+      let putCommentaires = await fetch(urlFilm, oOptions),
+      getFilm = await fetch(urlFilm);
+      
+      Promise.all([putCommentaires, getFilm])
+      .then(reponse => reponse[1].json())
+      .then((data) =>{
 
-      let putNote = await fetch(urlFilm, oOptions),
-          getFilm = await fetch(urlFilm);
-
-      Promise.all([putNote, getFilm])
-        .then(reponse => reponse[1].json())
-        .then((data) =>{
-  
-          setFilm(data);
-
-          //setMoyenne()
-          //setNbVote()
-          //codepen ejemplo de estrellas
-        })
-
-    // numerode votos .length// + de votos con un ternario 
+        setACommentaires(data.commentaires);
+        setFilm(data);
+      })
     }
-
 
   return (
     <main>
       <div className='film-container'>
         <article className='single-film'>
-        <img src={`../img/${elFilm.titreVignette}`} alt="img"  height={500}/>
-        <div>
-          <p className='p-single-film'>{elFilm.titre}</p>
-          <p className='p-single-film'>{elFilm.realisation}</p>
-          <p className='p-single-film'>{elFilm.annee}</p>
-          <p className='p-single-film'>{elFilm.genres}</p>
-          <p className='p-single-film'>{elFilm.description}</p>
-
-          <button onClick={soumettreNote}>Vote</button>
-        </div>
-        </article>
-        <div className="rating-stars">
-          <h2>Note </h2>
-          <div >
-            <input onClick={(e)=>soumettreNote(e)} type="radio" name="rating" id="rs0" value="0"  checked /><label for="rs0"></label>
-            <input onClick={(e)=>soumettreNote(e)} type="radio" name="rating" id="rs1" value="1" /><label for="rs1"></label>
-            <input onClick={(e)=>soumettreNote(e)} type="radio" name="rating" id="rs2" value="2" /><label for="rs2"></label>
-            <input onClick={(e)=>soumettreNote(e)} type="radio" name="rating" id="rs3" value="3" /><label for="rs3"></label>
-            <input onClick={(e)=>soumettreNote(e)} type="radio" name="rating" id="rs4" value="4" /><label for="rs4"></label>
-            <input onClick={(e)=>soumettreNote(e)} type="radio" name="rating" id="rs5" value="5" /><label for="rs5"></label>
+          <img src={`../img/${elFilm.titreVignette}`} alt="img"  height={500}/>
+          <div>
+            <p className='p-single-film'>{elFilm.titre}</p>
+            <p className='p-single-film'>{elFilm.realisation}</p>
+            <p className='p-single-film'>{elFilm.annee}</p>
+            <p className='p-single-film'>{elFilm.genres}</p>
+            <p className='p-single-film'>{elFilm.description}</p>
           </div>
-        </div>
-        {/* <li role="menuitem"><NavLink to="/liste-films">Liste de films</NavLink></li> */}  
+          <div className='etoiles'>
+              <Note handleNote={soumettreNote} handleMoyenne={moyenne} handleNbVotes={nbVotes} />
+          </div>
+          <div className='etoiles'>
+            <h2>Commentaires: </h2>
+            {elFilm.commentaires && elFilm.commentaires.map((commentaire, index) => (
+              <div key={index}>
+                <p>{commentaire.usager}: {commentaire.commentaires}</p>
+              </div>
+            ))}
+          </div>
+        </article>
+          {blocAjoutCommantaire}
       </div>
     </main>
   );

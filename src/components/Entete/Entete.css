@@ -3,12 +3,8 @@ body {
 }
 
 nav{
-    color: var(--couleur-principale);
     background-color:var(--secondary-color);
     color: var(--tertiary-color);
-    font-family: var(--nav_font);
-    
-    text-align: center;
     padding: 5px;   
 }
 
@@ -16,33 +12,94 @@ nav ul {
     display: flex;
     justify-content: space-around;
     list-style: none;
-   
     padding: 0;
     border-top: 1px solid var(--couleur-fond);
     border-bottom: 3px solid var(--couleur-fond);
 }
 
 nav li{
-    cursor: pointer;
-    
-}
-svg{
-    cursor: pointer;
-    fill: var(--tertiary-color);
-    width: 2%;
+    cursor: pointer; 
 }
 
 nav ul a {
-    color: var(--couleur-fond-pale);
     text-decoration: none;
-    font-family: var(--police-principale);
+    font-family: var(--nav_font);
     text-transform: uppercase;
     padding: 20px 20px 20px 20px;
     display: block;
     font-size: 36px;
+    color: var(--tertiary-color);
 }
 
 nav ul a:hover,
 nav ul a.active {
-    color:  rgb(214, 228, 12);
+    color: var(--tertiary-color);
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+}
+
+button{
+    position: relative;
+    display: inline-block;
+    width: 140px;
+    height: 35px;
+    margin-top: 15px;
+    font-family: var(--nav_font);
+    color: var(--tertiary-color);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: 0.5s;
+    letter-spacing: 4px;
+    overflow: hidden;
+    margin-right: 50px;
+    background-color: black;
+}
+
+button:hover{
+    background: var(--tertiary-color);
+    color: #050801;
+    box-shadow: 0 0 5px var(--tertiary-color),
+                0 0 25px var(--tertiary-color),
+                0 0 50px var(--tertiary-color),
+                0 0 200px var(--tertiary-color);
+     -webkit-box-reflect:below 1px linear-gradient(transparent, #0005);
+}
+
+@keyframes animate1{
+    0%{
+        left: -100%;
+    }
+    50%,100%{
+        left: 100%;
+    }
+}
+
+@keyframes animate2{
+    0%{
+        top: -100%;
+    }
+    50%,100%{
+        top: 100%;
+    }
+}
+
+@keyframes animate3{
+    0%{
+        right: -100%;
+    }
+    50%,100%{
+        right: 100%;
+    }
+}
+
+@keyframes animate4{
+    0%{
+        bottom: -100%;
+    }
+    50%,100%{
+        bottom: 100%;
+    }
 }

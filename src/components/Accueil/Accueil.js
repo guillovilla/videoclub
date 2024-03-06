@@ -2,12 +2,8 @@ import './Accueil.css';
 import test from './Accueil.json'
 
 function Accueil() {
-
-  // const textAccueil = test.map((text, index) => {
-  //   return <p key={index} data={text} />
-
-    const textAccueil = test.map((text, index) => {
-      return <div><p key={index}>{text}</p></div>;
+  const textAccueil = test.map((text, index) => {
+    return <div key={index}><p>{text}</p></div>;
 
   });
   return (
