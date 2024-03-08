@@ -30,7 +30,7 @@ function App() {
     e.preventDefault();
     // console.log('login')
     if (e.target){
-      setLogging(logging => ({ ...logging, estLog: false, usager: ''}));
+      setLogging(logging => ({ ...logging, estLog: false}));
       e.target.reset();
 
     }

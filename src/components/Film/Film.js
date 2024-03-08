@@ -87,7 +87,7 @@ function Film() {
 
     if(context.estLog) {
       blocAjoutCommantaire =  <form onSubmit={soumettreCommentaire}>
-                                <textarea name="textarea" placeholder='Ajouter votre commentaires'></textarea>
+                                <textarea name="textarea" placeholder='Ajouter votre commentaire' style={{width: 500}}></textarea>
                                 <button>soumettre</button>
                               </form>
     }
@@ -120,6 +120,7 @@ function Film() {
 
         setACommentaires(data.commentaires);
         setFilm(data);
+        e.target.reset();
       })
     }
 
@@ -127,7 +128,7 @@ function Film() {
     <main>
       <div className='film-container'>
         <article className='single-film'>
-          <img src={`../img/${elFilm.titreVignette}`} alt="img"  height={500}/>
+          <img src={`../img/${elFilm.titreVignette}`} alt={elFilm.titre}  height={500}/>
           <div>
             <p className='p-single-film'>{elFilm.titre}</p>
             <p className='p-single-film'>{elFilm.realisation}</p>
@@ -139,12 +140,22 @@ function Film() {
               <Note handleNote={soumettreNote} handleMoyenne={moyenne} handleNbVotes={nbVotes} />
           </div>
           <div className='etoiles'>
-            <h2>Commentaires: </h2>
-            {elFilm.commentaires && elFilm.commentaires.map((commentaire, index) => (
-              <div key={index}>
-                <p>{commentaire.usager}: {commentaire.commentaires}</p>
-              </div>
-            ))}
+          {elFilm.commentaires ? (
+            <div>
+              <h2>Commentaires: </h2>
+              {context.estLog ? "" : <p>Vous devez être connecté pour commenter ce film !</p> } 
+              {elFilm.commentaires.map((commentaire, index) => (
+                <div key={index}>
+                  <p>{commentaire.usager} dit : {commentaire.commentaires}</p>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div>
+            <h2>Commentaires: </h2>    
+            <p>Soyez la première personne à commenter ce film</p> 
+            </div>       
+          )}
           </div>
         </article>
           {blocAjoutCommantaire}
@@ -154,3 +165,4 @@ function Film() {
 }
 
 export default Film;
+

@@ -14,17 +14,17 @@ function Entete(props) {
             <li className='entete-text' role="menuitem"><NavLink to="/liste-films">Liste de films</NavLink></li>
             <li role="menuitem"> {context.estLog ? <NavLink to="/admin">Admin</NavLink> : '' }</li> 
         </ul>
-            <li role="menuitem"> {context.estLog ? 
-                                 <form onSubmit={props.handleLogoff}>
-                                    <button>Logout</button>
-                                  </form> : '' } </li> <h2>{context.usager}</h2>
-            <li role="menuitem">{context.estLog ? '' :
+            <div>{context.estLog ? 
+                                 <form className='form-login' onSubmit={props.handleLogoff}>
+                                    <p>Bienvenue {context.usager} </p><button>Logout</button>
+                                  </form> : '' }  
+                 {context.estLog ? '' :
                                 <form onSubmit={props.handleLogin}>
                                   <input type="text" name="usager"></input>
                                   <button>Login</button>
-                                </form>}</li>
+                                </form>}
+            </div>
       </nav>
-
     </header>
   );
 }

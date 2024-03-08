@@ -10,7 +10,6 @@ import { useEffect, useState } from 'react';
 function ListeFilms() {
   
   const urlListeFilms = 'https://api-films-dsr0.onrender.com/api/films';
-  // const urlListeFilms = 'dat/titre-asc.json';
   const [urlFiltre, setUrlFiltre] = useState(urlListeFilms);
   const [listeFilms, setListeFilms] = useState([]);
   

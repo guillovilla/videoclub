@@ -2,7 +2,6 @@ main{
   display: flex;
   flex-direction: row;
   background-color: var(--couleur-principale);
-  padding: 25px;
 }
 
 .grid-catalogue {
