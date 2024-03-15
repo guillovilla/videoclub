@@ -1,9 +1,9 @@
 import './Film.css';
 import Note from  '../Note/Note';
 import { useEffect, useState, useContext } from 'react';
+import { motion } from 'framer-motion';
 import { useParams } from 'react-router-dom';
 import { AppContext } from '../App/App';
-
 
 function Film() {
 
@@ -39,12 +39,6 @@ function Film() {
         }); 
   
     }, [urlFilm]);
-
-    // const notes = elFilm.notes || [];
-    // let nbVotes = notes.length;
-    // const totalVotes = notes.reduce((total, vote) => total + vote, 0);
-    // let moyenne = totalVotes / notes.length;
-    // moyenne = moyenne.toFixed(2);
            
         async function soumettreNote(e){
           
@@ -79,8 +73,6 @@ function Film() {
               moyenne = moyenne.toFixed(2);
           setMoyenne(moyenne);
         })
-        //setNbVotes()
-        //setMoyenne()
     }
 
     let blocAjoutCommantaire;
@@ -124,8 +116,22 @@ function Film() {
       })
     }
 
+    const transition = { duration: 0.5, ease: 'easeInOut' };
+
+    const variant = {
+      hidden: { opacity: 0, scale: 0.8 }, 
+      visible: { opacity: 1, scale: 1, transition: { duration: 0.5 } }, 
+      exit: { opacity: 0, scale: 0.8, transition: { duration: 0.5 } }, 
+    };
+    
+    
   return (
-    <main>
+    <motion.main 
+      key='accueil' 
+      initial='hidden'
+      animate='visible'
+      exit= 'exit'
+      variants={variant}>
       <div className='film-container'>
         <article className='single-film'>
           <img src={`../img/${elFilm.titreVignette}`} alt={elFilm.titre}  height={500}/>
@@ -133,12 +139,12 @@ function Film() {
             <p className='p-single-film'>{elFilm.titre}</p>
             <p className='p-single-film'>{elFilm.realisation}</p>
             <p className='p-single-film'>{elFilm.annee}</p>
-            <p className='p-single-film'>{elFilm.genres}</p>
+            <p className='p-single-film'>{elFilm.genres ? elFilm.genres.join(' - ') : ''}</p>
             <p className='p-single-film'>{elFilm.description}</p>
           </div>
-          <div className='etoiles'>
-              <Note handleNote={soumettreNote} handleMoyenne={moyenne} handleNbVotes={nbVotes} />
-          </div>
+            <div className='etoiles'>
+                <Note handleNote={soumettreNote} handleMoyenne={moyenne} handleNbVotes={nbVotes} />
+            </div>
           <div className='etoiles'>
           {elFilm.commentaires ? (
             <div>
@@ -160,7 +166,7 @@ function Film() {
         </article>
           {blocAjoutCommantaire}
       </div>
-    </main>
+    </motion.main>
   );
 }
 

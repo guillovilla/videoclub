@@ -3,6 +3,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { AppContext } from '../App/App';
 import Film from './Film';
+import Note from  '../Note/Note';
 //import Vote from '../Vote/Vote';
 
 
@@ -94,20 +95,29 @@ describe('Composant Film', () => {
     /**
      * À faire
      */
-    test('Vérifie la moyenne et le nombre de vote(s)', async () => {
-
-
-        //sur mockFilm, faire  la poutine pour trouver la moyenne et le nombre de la note
-        
-        // render le composant Vote avec sa/ses props
-
-        //sur screen toBeInDocument() pour moyenne
-
-        //sur screen toBeInDocument() pour nombre de votes
-
-
-    });
-
+        test('Vérifie la moyenne et le nombre de vote(s)', async () => {
+            
+            const mockFilm = {
+                titre: 'Alien - Le 8ème passager',
+                genres: ['Horreur', 'Science-fiction'],
+                description: 'Un vaisseau spatial perçoit une transmission non-identifiée comme un signal de détresse...',
+                titreVignette: 'alienle8emepassager.jpg',
+                realisation: 'Ridley Scott',
+                annee: 1979,
+                notes: [3, 4, 5, 2, 1]
+            };
+            
+            const nbVotes = mockFilm.notes.length;
+            const totalVotes = mockFilm.notes.reduce((total, vote) => total + vote, 0);
+            const moyenne = (totalVotes / mockFilm.notes.length).toFixed(2);
+    
+            render(<Note handleMoyenne={moyenne} handleNbVotes={nbVotes} />);
+    
+            await waitFor(() => {
+                expect(screen.getByText({moyenne})).toBeInTheDocument();
+                expect(screen.getByText({nbVotes})).toBeInTheDocument();
+            });
+        });
     
     /**
      * Il est également important de tester avec des données réelles provenant du serveur pour s'assurer que l'application fonctionne correctement dans un environnement plus réaliste. 
@@ -125,14 +135,6 @@ describe('Composant Film', () => {
             expect(data).toHaveProperty('description');
             expect(data).toHaveProperty('titreVignette');
             expect(data).toHaveProperty('annee');
-
-
-
         });
-
-
-
-
-
     });
 });

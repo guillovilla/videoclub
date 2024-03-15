@@ -1,10 +1,9 @@
-import './ListeFilms.css';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import TuileFilm from  '../TuileFilm/TuileFilm';
 import Filtre from  '../Filtre/Filtre';
-import { Link } from 'react-router-dom';
-import { useEffect, useState } from 'react';
-
-
+import { motion } from 'framer-motion';
+import './ListeFilms.css';
 
 
 function ListeFilms() {
@@ -12,9 +11,9 @@ function ListeFilms() {
   const urlListeFilms = 'https://api-films-dsr0.onrender.com/api/films';
   const [urlFiltre, setUrlFiltre] = useState(urlListeFilms);
   const [listeFilms, setListeFilms] = useState([]);
-  
-  
 
+  const [estCharge, setEstCharge] = useState(false);
+  
   useEffect(() => {
 
     fetch(urlFiltre)
@@ -22,15 +21,15 @@ function ListeFilms() {
       .then((data) => {
 
         setListeFilms(data);
+        setEstCharge(true);
 
       }); 
 
   }, [urlFiltre]);
 
-
   const tuilesFilm = listeFilms.map((film, index) => {
 
-    return <Link key={index} to={`/film/${film.id}`}><TuileFilm key={index} data={film}  handleInfo={urlFiltre} /></Link>
+    return <Link key={index} to={`/film/${film.id}`}><TuileFilm key={index} data={film}  handleInfo={urlFiltre} data-testid="tuile-film"  /></Link>
     
   });
 
@@ -38,22 +37,16 @@ function ListeFilms() {
   function filtre(e) {
     if(e.target.textContent === 'Réalisateur (A-Z)'){
       setUrlFiltre(`https://api-films-dsr0.onrender.com/api/films?tri=realisation&order-direction=asc`);
-      // setUrlFiltre('data/realisation-asc.json');
     }else if (e.target.textContent === 'Réalisateur (Z-A)'){
       setUrlFiltre(`https://api-films-dsr0.onrender.com/api/films?tri=realisation&order-direction=desc`);
-      // setUrlFiltre('data/realisation-desc.json');
     }else if (e.target.textContent === 'Titre (A-Z)'){
       setUrlFiltre(`https://api-films-dsr0.onrender.com/api/films?tri=titre&order-direction=asc`);
-      // setUrlFiltre('data/titre-asc.json');
     }else if (e.target.textContent === 'Titre (Z-A)'){
       setUrlFiltre(`https://api-films-dsr0.onrender.com/api/films?tri=titre&order-direction=desc`);
-      // setUrlFiltre('data/titre-desc.json');
     }else if (e.target.textContent === 'Année (plus récent)'){
       setUrlFiltre(`https://api-films-dsr0.onrender.com/api/films?tri=annee&order-direction=desc`);
-      // setUrlFiltre('data/annee-asc.json');
     }else if (e.target.textContent === 'Année (plus ancien)'){
       setUrlFiltre(`https://api-films-dsr0.onrender.com/api/films?tri=annee&order-direction=asc`);
-      // setUrlFiltre('data/annee-desc.json');
     }
 }
 
@@ -61,23 +54,45 @@ function ListeFilms() {
 function classActive(e) {
 
   let elsFiltre = e.target.closest('.filtres').children;
-
-  // console.log(elsFiltre)
-
   for (let i = 0; i < elsFiltre.length; i++) {
     elsFiltre[i].classList.remove('active');
   }   
   e.target.classList.add('active');
 }
 
-  return (
-    <main>
-      <Filtre handleFiltre={filtre} handleTarget={classActive}  />
-      <div className="grid-catalogue">
+const transition = { duration: 0.5, ease: 'easeInOut' };
+const variant = {
+  hidden: { opacity: 0, y: 25 },
+  visible: { opacity: 1, y: 0, transition},
+  exit: { opacity: 0, y: 25, transition },
+}
+
+return (
+  <main>
+
+    <motion.div
+      key="filtres"
+      initial={{ opacity: 0, x: -25 }}
+      animate={{ opacity: 1, x: 25, transition }}
+      exit={{ opacity: 0, x: -25, transition }}
+    >
+    <Filtre handleFiltre={filtre} handleTarget={classActive} />
+    </motion.div>
+    
+    {estCharge ? (
+      <motion.div
+        key="liste-film"
+        initial="hidden"
+        animate="visible"
+        exit="exit"
+        variants={variant}
+        className="grid-catalogue"
+      >
         {tuilesFilm}
-      </div>
-    </main>
-  );
+      </motion.div>
+    ) : ( ' ' )}
+  </main>
+);
 }
 
 export default ListeFilms;

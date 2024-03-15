@@ -1,5 +1,6 @@
 body {
     font-family: var(--principal_font);
+    background-color: black;
 }
 
 nav{
@@ -11,7 +12,8 @@ nav ul {
     display: flex;
     justify-content: start;
     list-style: none;
-    padding: 0;
+    padding: 5px;
+    margin: 0;
     
 }
 
@@ -29,11 +31,15 @@ nav ul a {
     color: var(--tertiary-color);
 }
 
-nav ul a:hover,
-nav ul a.active {
-    color: var(--tertiary-color);
-}
-
+nav ul a:hover{
+        background: var(--tertiary-color);
+        color: #050801;
+        box-shadow: 0 0 5px var(--tertiary-color),
+                    0 0 25px var(--tertiary-color),
+                    0 0 50px var(--tertiary-color),
+                    0 0 200px var(--tertiary-color);
+         -webkit-box-reflect:below 1px linear-gradient(transparent, #0005);
+    }
 
 button{
     position: relative;
@@ -60,6 +66,7 @@ button:hover{
                 0 0 200px var(--tertiary-color);
      -webkit-box-reflect:below 1px linear-gradient(transparent, #0005);
 }
+
 form{
     display: flex;
     flex-direction: row;
@@ -68,9 +75,9 @@ form{
     justify-content:flex-end;
     padding: 2px;    
 }
+
 input{
-    margin: 15px;
-   
+    margin: 15px;  
 }
 
 @keyframes animate1{
@@ -108,3 +115,5 @@ input{
         bottom: 100%;
     }
 }
+
+

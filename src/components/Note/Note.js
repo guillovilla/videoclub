@@ -2,7 +2,6 @@ import './Note.css';
 
 function Note(props) {
   
-
   return (
      
     <div>

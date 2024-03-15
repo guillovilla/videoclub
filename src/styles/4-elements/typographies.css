@@ -20,10 +20,15 @@
   src: url('../../../public/fonts/Film\ Premieres.otf') format('opentype');
   /* Puedes agregar estilos adicionales si es necesario, como font-weight o font-style */
 }
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../../../public/fonts/Montserrat-VariableFont_wght.ttf') format('opentype');
+  /* Puedes agregar estilos adicionales si es necesario, como font-weight o font-style */
+}
 
 :root {
     --principal_font: 'Press Start 2';
-    --secundary_font: 'Capitol';
+    --secundary_font: 'Montserrat';
     --nav_font: 'NeonLight';
 
   }

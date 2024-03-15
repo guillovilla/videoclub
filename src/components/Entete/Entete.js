@@ -10,20 +10,19 @@ function Entete(props) {
     <header>
       <nav>
         <ul role="menubar">
-            <li role="menuitem"><NavLink to="/">Accueil</NavLink></li>
+            <li role="menuitem"><NavLink to="/">Video Club</NavLink></li>
             <li className='entete-text' role="menuitem"><NavLink to="/liste-films">Liste de films</NavLink></li>
             <li role="menuitem"> {context.estLog ? <NavLink to="/admin">Admin</NavLink> : '' }</li> 
         </ul>
-            <div>{context.estLog ? 
-                                 <form className='form-login' onSubmit={props.handleLogoff}>
-                                    <p>Bienvenue {context.usager} </p><button>Logout</button>
-                                  </form> : '' }  
-                 {context.estLog ? '' :
-                                <form onSubmit={props.handleLogin}>
-                                  <input type="text" name="usager"></input>
-                                  <button>Login</button>
-                                </form>}
-            </div>
+        <div>{!context.estLog ? 
+                              <form onSubmit={props.handleLogin}>
+                              <input type="text" name="usager"></input>
+                              <button>Login</button>
+                              </form> : 
+                              <form onSubmit={props.handleLogoff}>
+                                <p>Bienvenue {context.usager} </p><button>Logout</button>
+                              </form>}
+        </div>
       </nav>
     </header>
   );

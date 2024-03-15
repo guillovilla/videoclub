@@ -18,15 +18,12 @@ function TuileFilm(props) {
         propriete = "realisation";
     }
   
-
-  
   return (
     <article className="item">
         <h4 href="#0"></h4>
         <img src={`/img/${props.data.titreVignette}`} alt="img" width="50" />
         
         <div className="item__overlay">
-            {/* <h3 className='info-aficher'>{props.data.titre}</h3> */}
             <h3 className='info-aficher'>{props.data[propriete]}</h3>
             <div className="item__body">
                 <p>{props.data.titre}</p>

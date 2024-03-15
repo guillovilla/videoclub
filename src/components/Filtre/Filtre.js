@@ -9,7 +9,6 @@ function Filtre(props) {
     <h2>Filtres</h2> 
     <div className='filtres'>
       
-        {/* <li onClick={(e) => {filtre(e); maDeuxiemmeFonction()}}>Realisateur alphabetique (A-Z)</li> */}
         <li className='filtre' onClick={(e) => { props.handleFiltre(e); props.handleTarget(e) }}>Année (plus récent)</li>
         <li className='filtre' onClick={(e) => { props.handleFiltre(e); props.handleTarget(e) }}>Année (plus ancien)</li>
         <li className='filtre' onClick={(e) => { props.handleFiltre(e); props.handleTarget(e) }}>Réalisateur (A-Z)</li>

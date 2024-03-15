@@ -25,13 +25,22 @@ h2 {
 }
 
 li:hover {
-    
-    color: var(--secondary-color);
-    text-decoration: underline;
+    background: var(--tertiary-color);
+    color: #050801;
+    box-shadow: 0 0 5px var(--tertiary-color),
+                0 0 25px var(--tertiary-color),
+                0 0 50px var(--tertiary-color),
+                0 0 200px var(--tertiary-color);
+     -webkit-box-reflect:below 1px linear-gradient(transparent, #0005);
 }
 
 li:active {
-    
-    color: var(--secondary-color);
+    background: var(--tertiary-color);
+    color: #050801;
+    box-shadow: 0 0 5px var(--tertiary-color),
+                0 0 25px var(--tertiary-color),
+                0 0 50px var(--tertiary-color),
+                0 0 200px var(--tertiary-color);
+     -webkit-box-reflect:below 1px linear-gradient(transparent, #0005);
 }
 
